@@ -56,12 +56,12 @@ export default function Detail() {
 				</div>
 				<hr></hr>
 				<form onSubmit={handleOnSubmit}>
-					<input placeholder="First Name" name="fname" />
-					<input placeholder="Last Name" name="lname" />
-					<input placeholder="Email" name="email" />
-					<input placeholder="Phone" name="phone" />
-					<button onSubmit={handleOnSubmit}>Create user</button>
+					<input placeholder="First Name" name="fname" className='border-2 p-2 rounded w-2/4'/>
+					<input placeholder="Last Name" name="lname" className='border-2 p-2 rounded w-2/4'/>
+					<input placeholder="Email" name="email" className='border-2 p-2 rounded w-2/4'/>
+					<input placeholder="Phone" name="phone"className='border-2 p-2 rounded w-2/4' />
 					<hr />
+					<button onSubmit={handleOnSubmit} className='float-right border-2 rounded-lg p-2 mt-4 bg-blue-500 text-white'>Create user</button>
 				</form>
 			</div>
 		);
