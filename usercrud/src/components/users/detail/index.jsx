@@ -9,7 +9,6 @@ import {
 import Modal from '../Modal';
 import CreateUser from '../users/CreateUser';
 
-
 export default function Detail() {
 	const [user, setUser] = useState([]);
 	const [newUser, setNewUser] = useState(false);
@@ -17,22 +16,21 @@ export default function Detail() {
 	const [lname, setLName] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
-  const [onEdit, setOnEdit] = useState(false)
-  const [editingData, setEditingData] = useState({
-    name:'',
-    email:'',
-    phone:''
-  })
-  const [editedData, setEditedData] = useState({
-    name:'',
-    email:'',
-    phone:''
-
-  })
+	const [onEdit, setOnEdit] = useState(false);
+	const [editingData, setEditingData] = useState({
+		name: '',
+		email: '',
+		phone: '',
+	});
+	const [editedData, setEditedData] = useState({
+		name: '',
+		email: '',
+		phone: '',
+	});
 
 	useEffect(() => {
 		fetchData();
-    // setOnEdit()
+		// setOnEdit()
 	}, []);
 
 	const handleOnSubmit = (e) => {
@@ -52,38 +50,59 @@ export default function Detail() {
 			<div className="absolute w-2/4 h-1/4 border-black left-20 bg-white drop-shadow-md p-6 z-20 top-0 md:left-72 md:w-2/4 md:h-2/5 rounded-lg ">
 				<div className="flex justify-between mb-4">
 					<h4> Create new user(s)</h4>
-					<button onClick={() => setNewUser(false)}> X</button>
+					<button onClick={() => setNewUser(false)}>
+						<strong>X</strong>{' '}
+					</button>
 				</div>
 				<hr></hr>
 				<form onSubmit={handleOnSubmit}>
-					<input placeholder="First Name" name="fname" className='border-2 p-2 rounded w-2/4'/>
-					<input placeholder="Last Name" name="lname" className='border-2 p-2 rounded w-2/4'/>
-					<input placeholder="Email" name="email" className='border-2 p-2 rounded w-2/4'/>
-					<input placeholder="Phone" name="phone"className='border-2 p-2 rounded w-2/4' />
+					<input
+						placeholder="First Name"
+						name="fname"
+						className="border-2 p-2 rounded w-2/4"
+					/>
+					<input
+						placeholder="Last Name"
+						name="lname"
+						className="border-2 p-2 rounded w-2/4"
+					/>
+					<input
+						placeholder="Email"
+						name="email"
+						className="border-2 p-2 rounded w-2/4"
+					/>
+					<input
+						placeholder="Phone"
+						name="phone"
+						className="border-2 p-2 rounded w-2/4"
+					/>
 					<hr />
-					<button onSubmit={handleOnSubmit} className='float-right border-2 rounded-lg p-2 mt-4 bg-blue-500 text-white'>Create user</button>
+					<button
+						onSubmit={handleOnSubmit}
+						className="float-right border-2 rounded-lg p-2 mt-4 bg-blue-500 text-white">
+						Create user
+					</button>
 				</form>
 			</div>
 		);
 	};
 
 	const HandleDelete = async (id) => {
-    await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: "DELETE"
-    })
-      .then((response) => {
-        if (response.status !== 200) {
-          return;
-        } else {
-          setUser(
-            user.filter((user) => {
-              return user.id !== id+1;
-            })
-          );
-        }
-      })
-      // .catch((error) => console.log(error));
-  };
+		await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+			method: 'DELETE',
+		}).then((response) => {
+			if (response.status !== 200) {
+				return;
+			} else {
+				setUser(
+					user.filter((user) => {
+						return user.id !== id + 1;
+					})
+				);
+			}
+		});
+		// .catch((error) => console.log(error));
+	};
 
 	const AddNewUser = async () => {
 		await fetch('https://jsonplaceholder.typicode.com/users', {
@@ -117,54 +136,55 @@ export default function Detail() {
 			.catch((error) => console.log(error));
 	};
 
-  const handleEditSubmit= async(e)=>{
-    e.preventDefault()
-    await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: "PUT"
-    }).then((response) =>{
-      if(response.status !== 200){
-        return
-      } else{
-        try {
-          setEditedData({
-            name: e.target.name.value,
-            email: e.target.email.value,
-            phone: e.target.phone.value
-          })
-          setUser([...user, editedData])
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    })
-  }
+	const handleEditSubmit = async (e) => {
+		e.preventDefault();
+		await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+			method: 'PUT',
+		}).then((response) => {
+			if (response.status !== 200) {
+				return;
+			} else {
+				try {
+					setEditedData({
+						name: e.target.name.value,
+						email: e.target.email.value,
+						phone: e.target.phone.value,
+					});
+					setUser([...user, editedData]);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		});
+	};
 
-  const HandleEdit = (id)=>{
-    setOnEdit(true);
-    const useredited = user.filter((item) => item.id === id+1)[0]
-    const d = {
-      name: useredited.name,
-      email: useredited.email,
-      phone: useredited.phone
-    }
-    console.log(d)
+	const HandleEdit = (id) => {
+		// setOnEdit(true);
+		const useredited = user.filter((item) => item.id === id + 1)[0];
+		const d = {
+			name: useredited.name,
+			email: useredited.email,
+			phone: useredited.phone,
+		};
+		// console.log(d);
+    alert(`${"Name:" + d.name + " Email:" + d.email + "Phone:" + d.phone}`)
 		return (
 			<div className="absolute w-2/4 h-1/4 border-black left-20 bg-white drop-shadow-md p-6 z-20 top-0 md:left-72 md:w-2/4 md:h-2/5 rounded-lg ">
 				<div className="flex justify-between mb-4">
-					<h4> Edit user  </h4>
+					<h4> Edit user </h4>
 					<button onClick={() => setOnEdit(false)}> X</button>
 				</div>
 				<hr></hr>
 				<form onSubmit={handleEditSubmit}>
 					<input placeholder="First Name" name="name" defaultValue={d.name} />
-					<input placeholder="Email" name="email"  defaultValue={d.email}/>
+					<input placeholder="Email" name="email" defaultValue={d.email} />
 					<input placeholder="Phone" name="phone" defaultValue={d.phone} />
 					<button onSubmit={handleEditSubmit}> Save Changes</button>
 					<hr />
 				</form>
 			</div>
 		);
-  }
+	};
 
 	return (
 		<div className="h-full bg-white pb-8 relative">
@@ -177,9 +197,7 @@ export default function Detail() {
 					{' '}
 					Create New User
 				</button>
-        {
-          onEdit && <HandleEdit/>
-        }
+				{onEdit && <HandleEdit />}
 			</div>
 
 			<div className="flex  justify-between mt-6 mr-1 ml-1 align-middle px-2 py-3 border-0 bg-[#F1F2F5] rounded-lg ">
@@ -248,11 +266,12 @@ export default function Detail() {
 								<td className="px-6 py-4">{user.email}</td>
 								<td className="px-6 py-4 ">
 									<button
-										onClick={()=>HandleEdit(id)}
+										onClick={() => HandleEdit(id)}
 										className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
 										<AiFillEdit className="md:mr-4" />{' '}
 									</button>
-									<button onClick={()=>HandleDelete(id)}
+									<button
+										onClick={() => HandleDelete(id)}
 										className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
 										<AiFillDelete />
 									</button>
